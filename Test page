@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision-Making Test</title>
+    <script>
+        let startTime;
+        function startTimer() {
+            startTime = Date.now();
+        }
+        function recordResponse(question, answer) {
+            if (!startTime) {
+                alert("Please start the timer first.");
+                return;
+            }
+            let responseTime = Date.now() - startTime;
+            let name = document.getElementById("participantName").value;
+            if (!name) {
+                alert("Please enter your name first.");
+                return;
+            }
+            let data = `${name},${question},${answer},${responseTime}ms\n`;
+            let blob = new Blob([data], { type: 'text/csv' });
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = "response_data.csv";
+            a.click();
+            startTime = null;
+        }
+    </script>
+</head>
+<body>
+    <h2>Decision-Making Test</h2>
+    <label for="participantName">Enter your name:</label>
+    <input type="text" id="participantName" placeholder="Your name">
+    <button onclick="startTimer()">Start Test</button>
+    
+    <h3>1. What would you do if you found a lost wallet?</h3>
+    <button onclick="startTimer()">Start Question</button>
+    <button onclick="recordResponse('Lost Wallet', 'Return to owner'); startTimer();">Return to owner</button>
+    <button onclick="recordResponse('Lost Wallet', 'Keep it'); startTimer();">Keep it</button>
+    <button onclick="recordResponse('Lost Wallet', 'Ignore it'); startTimer();">Ignore it</button>
+    
+    <h3>2. Apakah tindakan anda jika anda terlihat seekor anak kucing terbiar?</h3>
+    <button onclick="startTimer()">Start Question</button>
+    <button onclick="recordResponse('Anak Kucing Terbiar', 'Ambil dan jaga'); startTimer();">Ambil dan jaga</button>
+    <button onclick="recordResponse('Anak Kucing Terbiar', 'Biarkan sahaja'); startTimer();">Biarkan sahaja</button>
+    <button onclick="recordResponse('Anak Kucing Terbiar', 'Hubungi pusat penyelamat'); startTimer();">Hubungi pusat penyelamat</button>
+</body>
+</html>
